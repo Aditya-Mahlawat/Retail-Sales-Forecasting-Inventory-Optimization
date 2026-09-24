@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class RecordIn(BaseModel):
+    mape: float
     name: str
     category: str
     value: float
