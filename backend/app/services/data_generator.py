@@ -383,8 +383,8 @@ def reset_and_seed_database(session: Session, days: int = 365, seed: int = 42) -
             total_cost=4250.0,
             status="ORDERED",
             priority="CRITICAL",
-            created_at=(datetime.utcnow() - timedelta(days=3)).strftime("%Y-%m-%d"),
-            expected_delivery=(datetime.utcnow() + timedelta(days=7)).strftime("%Y-%m-%d"),
+            created_at=(datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%d"),
+            expected_delivery=(datetime.now(timezone.utc) + timedelta(days=7)).strftime("%Y-%m-%d"),
         ),
         PurchaseOrder(
             po_number="PO-2026-002",
@@ -394,8 +394,8 @@ def reset_and_seed_database(session: Session, days: int = 365, seed: int = 42) -
             total_cost=416.0,
             status="ORDERED",
             priority="HIGH",
-            created_at=(datetime.utcnow() - timedelta(days=2)).strftime("%Y-%m-%d"),
-            expected_delivery=(datetime.utcnow() + timedelta(days=2)).strftime("%Y-%m-%d"),
+            created_at=(datetime.now(timezone.utc) - timedelta(days=2)).strftime("%Y-%m-%d"),
+            expected_delivery=(datetime.now(timezone.utc) + timedelta(days=2)).strftime("%Y-%m-%d"),
         ),
         PurchaseOrder(
             po_number="PO-2026-003",
@@ -405,8 +405,8 @@ def reset_and_seed_database(session: Session, days: int = 365, seed: int = 42) -
             total_cost=900.0,
             status="APPROVED",
             priority="MEDIUM",
-            created_at=(datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%d"),
-            expected_delivery=(datetime.utcnow() + timedelta(days=9)).strftime("%Y-%m-%d"),
+            created_at=(datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%d"),
+            expected_delivery=(datetime.now(timezone.utc) + timedelta(days=9)).strftime("%Y-%m-%d"),
         ),
     ]
     for po in sample_pos:

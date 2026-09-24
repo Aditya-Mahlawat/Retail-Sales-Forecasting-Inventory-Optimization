@@ -40,7 +40,7 @@ def get_or_seed_sales(session: Session) -> Dict[str, pd.DataFrame]:
         reset_and_seed_database(session)
         sales = session.exec(select(DailySale).order_by(DailySale.date)).all()
         
-    df = pd.DataFrame([s.dict() for s in sales])
+    df = pd.DataFrame([s.model_dump() for s in sales])
     sales_by_sku = {}
     for sku, group in df.groupby("sku"):
         sales_by_sku[str(sku)] = group.sort_values("date").reset_index(drop=True)
@@ -183,7 +183,7 @@ def forecast_demand(req: RetailRequest, session: Session = Depends(get_session))
         sales_by_sku = get_or_seed_sales(session)
         sales_df = sales_by_sku.get(sku)
     else:
-        sales_df = pd.DataFrame([s.dict() for s in sales])
+        sales_df = pd.DataFrame([s.model_dump() for s in sales])
         
     if sales_df is None or len(sales_df) == 0:
         raise HTTPException(status_code=404, detail=f"No sales data found for SKU {sku}")

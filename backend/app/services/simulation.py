@@ -56,7 +56,7 @@ def run_supply_chain_simulation(
         lt_std_sim = max(0.1, float(p.lead_time_std * (1.0 + max(0, req.lead_time_shock_days) * 0.1)))
         
         # Temp product with shocked holding cost
-        p_sim = Product(**p.dict())
+        p_sim = Product(**p.model_dump())
         p_sim.holding_cost_rate = max(0.05, p.holding_cost_rate + req.holding_cost_rate_shock)
         
         ss_sim, rop_sim = calculate_safety_stock_and_rop(

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Any, Optional
 from sqlmodel import Session, select
 
@@ -40,7 +40,7 @@ def create_purchase_order(session: Session, order_in: PurchaseOrderCreate) -> Pu
         raise ValueError(f"Product SKU {order_in.sku} not found")
         
     # Generate unique PO number
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     count = len(session.exec(select(PurchaseOrder)).all()) + 1
     po_num = f"PO-{now.year}-{count:04d}"
     
@@ -141,7 +141,7 @@ def generate_replenishment_suggestions(session: Session) -> List[Dict[str, Any]]
             select(DailySale).where(DailySale.sku == p.sku).order_by(DailySale.date)
         ).all()
         if sales:
-            sales_by_sku[p.sku] = pd.DataFrame([s.dict() for s in sales])
+            sales_by_sku[p.sku] = pd.DataFrame([s.model_dump() for s in sales])
             
     health_items = evaluate_inventory_health(products, sales_by_sku, service_level=0.95)
     
